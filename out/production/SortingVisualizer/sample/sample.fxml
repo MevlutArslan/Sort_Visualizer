@@ -23,7 +23,7 @@
         <Button fx:id="bubSort" onAction="#bubbleSort" text="Bubble Sort" GridPane.rowIndex="1" />
         <Button fx:id="gnomSort" onAction="#gnomeSort" text="Gnome Sort" GridPane.rowIndex="2" />
         <Button fx:id="slctSort" onAction="#selectionSort" text="Selection Sort" GridPane.rowIndex="3"/>
-        <Button fx:id="" onAction="#selectionSort" text="Insertion Sort" GridPane.rowIndex="4"/>
+        <Button fx:id="insrtSort" onAction="#insertionSort" text="Insertion Sort" GridPane.rowIndex="4"/>
         <Button fx:id="" onAction="#selectionSort" text="Quick Sort" GridPane.rowIndex="5"/>
         <Button fx:id="" onAction="#selectionSort" text="Heap Sort" GridPane.rowIndex="6"/>
         <Button onAction="#reset" text="run" GridPane.rowIndex="7"/>

@@ -18,18 +18,22 @@ public class Controller {
     final int canvasHeight = 600;
     final int canvasWidth = 900;
     final int boxWidth = 10;
-    final int numberOfBoxes = canvasWidth/boxWidth;
+    final int numberOfBoxes = canvasWidth / boxWidth;
     public static int[] arr;
     GraphicsContext canvas;
 
 
-    @FXML Canvas mainCanvas;
-    @FXML Button bubSort;
-    @FXML Button gnomSort;
-    @FXML Button slctSort;
+    @FXML
+    Canvas mainCanvas;
+    @FXML
+    Button bubSort;
+    @FXML
+    Button gnomSort;
+    @FXML
+    Button slctSort;
 
     @FXML
-    void reset(){
+    void reset() {
         gnomSort.setDisable(false);
         slctSort.setDisable(false);
         bubSort.setDisable(false);
@@ -39,37 +43,39 @@ public class Controller {
 
 
     @FXML
-    void draw(){
+    void draw() {
         canvas = mainCanvas.getGraphicsContext2D();
         canvas.setStroke(Color.BLACK);
         canvas.setLineWidth(3);
-        canvas.clearRect(0,0,canvasWidth,canvasHeight);
-        for(int i = 0; i < arr.length;i++){
-            canvas.strokeLine(i,canvasHeight,i,canvasHeight-arr[i]);
+        canvas.clearRect(0, 0, canvasWidth, canvasHeight);
+        for (int i = 0; i < arr.length; i++) {
+            canvas.strokeLine(i, canvasHeight, i, canvasHeight - arr[i]);
         }
-  }
+    }
+
     @FXML
-    void generateArr(){
+    void generateArr() {
         arr = new int[canvasWidth];
         Random rand = new Random();
-        for(int i = 0;i<canvasWidth;i++){
+        for (int i = 0; i < canvasWidth; i++) {
             arr[i] = rand.nextInt(canvasHeight);
         }
         draw();
     }
 
-    void swap(int[] arr,int a,int b) throws InterruptedException {
+    void swap(int[] arr, int a, int b) throws InterruptedException {
         int temp = arr[a];
         arr[a] = arr[b];
-        arr[b] = temp;;
+        arr[b] = temp;
+        ;
     }
 
     @FXML
     void bubbleSort() throws InterruptedException {
         gnomSort.setDisable(true);
         slctSort.setDisable(true);
-        Thread thread2 = new Thread(){
-            public void run(){
+        Thread thread2 = new Thread() {
+            public void run() {
                 int i;
                 int j;
                 int n = arr.length;
@@ -98,7 +104,7 @@ public class Controller {
         thread2.start();
     }
 
-    void quickSort(int[] arr , int start, int end) throws InterruptedException {
+    void quickSort(int[] arr, int start, int end) throws InterruptedException {
         if (start >= end) {
             return;
         }
@@ -108,17 +114,17 @@ public class Controller {
 
     }
 
-    int partition(int[] arr, int start, int end) throws InterruptedException{
+    int partition(int[] arr, int start, int end) throws InterruptedException {
         int pIndex = start;
-        Thread th2 = new Thread(){
-            public void run(){
+        Thread th2 = new Thread() {
+            public void run() {
                 int pIndex = start;
                 int pVal = arr[end];
                 int i;
-                for(i = start; i < end;i++){
-                    if(arr[i] < pVal){
+                for (i = start; i < end; i++) {
+                    if (arr[i] < pVal) {
                         try {
-                            swap(arr,pIndex,i);
+                            swap(arr, pIndex, i);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -126,7 +132,7 @@ public class Controller {
                     }
                 }
                 try {
-                    swap(arr,pIndex,end);
+                    swap(arr, pIndex, end);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -143,13 +149,12 @@ public class Controller {
     }
 
 
-
     @FXML
     void selectionSort() {
         bubSort.setDisable(true);
         gnomSort.setDisable(true);
-        Thread th2 = new Thread(){
-            public void run(){
+        Thread th2 = new Thread() {
+            public void run() {
                 int n = arr.length;
                 for (int i = 0; i < n - 1; i++) {
                     int mIndex = i;
@@ -159,7 +164,7 @@ public class Controller {
                         }
                     }
                     try {
-                        swap(arr,i, mIndex);
+                        swap(arr, i, mIndex);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -181,21 +186,20 @@ public class Controller {
     void gnomeSort() throws InterruptedException {
         bubSort.setDisable(true);
         slctSort.setDisable(true);
-        Thread th2 = new Thread(){
+        Thread th2 = new Thread() {
             @Override
             public void run() {
                 int pos = 0;
-                while (pos < arr.length){
-                    if(pos ==0 || arr[pos] >= arr[pos-1]){
-                        pos ++;
-                    }
-                    else{
+                while (pos < arr.length) {
+                    if (pos == 0 || arr[pos] >= arr[pos - 1]) {
+                        pos++;
+                    } else {
                         try {
-                            swap(arr,pos,pos-1);
+                            swap(arr, pos, pos - 1);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        pos --;
+                        pos--;
                     }
                     draw();
                     try {
@@ -210,15 +214,29 @@ public class Controller {
         th2.start();
     }
 
-//    void insertionSort(){
-//        int i = 1;
-//        while(i < arr.length){
-//            int j = 1;
-//            while(j > 0 && arr[j-1] > arr[j]){
-//                j ++;
-//            }
-//            i++;
-//        }
-//    }
+    @FXML
+    void insertionSort() {
+        Thread th2 = new Thread(){
+            public void run(){
+                for (int i = 0; i < arr.length; i++) {
+                    int key = arr[i];
+                    int j = i - 1;
 
+                    while (j >= 0 && arr[j] > key) {
+
+                        arr[j + 1] = arr[j];
+                        j = j - 1;
+                    }
+                    arr[j + 1] = key;
+                    draw();
+                    try {
+                        Thread.sleep(30);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        th2.start();
+    }
 }
